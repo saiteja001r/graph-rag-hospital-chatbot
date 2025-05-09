@@ -1,0 +1,4 @@
+.grpah
+.env
+chroma_data/
+*__pycache__/
