@@ -5,3 +5,6 @@ langchainhub
 langchain-huggingface
 langchain-chroma
 langchain-text-splitters
+langgraph
+langchain-nvidia-ai-endpoints
+
