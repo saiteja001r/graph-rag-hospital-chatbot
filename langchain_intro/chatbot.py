@@ -121,7 +121,7 @@ review_chain = (
 
 
 
-@tool(return_direct=True)
+# @tool(return_direct=True)
 def get_current_wait_time(hospital: str) -> int | str:
     """Dummy function to generate fake wait times"""
 
@@ -130,38 +130,41 @@ def get_current_wait_time(hospital: str) -> int | str:
     time.sleep(1)
     return random.randint(1, 10000)
 
-@tool(return_direct=True)
+# @tool(return_direct=True)
 def reviews(context: str, question: str) -> str:
     """Answer questions about patient reviews."""
     return review_chain.invoke({"context": context, "question": question})
 
 
 
-tools = [
-    reviews,
-    get_current_wait_time,
-]
+# tools = [
+#     reviews,
+#     get_current_wait_time,
+# ]
 
 
-model = agent_model.bind_tools(tools)
+# model = agent_model.bind_tools(tools)
 
 
 
-hospital_agent_prompt  = client.pull_prompt("hwchase17/openai-functions-agent", include_model=True)
+# hospital_agent_prompt  = client.pull_prompt("hwchase17/openai-functions-agent", include_model=True)
 
 
 
 
 agent = create_react_agent(
     # disable parallel tool calls
-    model = model,
-    tools=tools,
-    prompt=hospital_agent_prompt,
+    model = agent_model,
+    tools=[get_current_wait_time, reviews],
+    prompt="""you are a helpful assistant that answers questions about hospitals. 
+    you can answer questions about patient reviews
+    {input}
+    """,
 )
 
 
 
 
-agent.invoke(
-    {"messages": [{"role": "user", "content": "What is the current wait time at hospital C?"}]}
-)
+# agent.invoke(
+#     {"messages": [{"role": "user", "content": "What is the current wait time at hospital C?"}]}
+# )
